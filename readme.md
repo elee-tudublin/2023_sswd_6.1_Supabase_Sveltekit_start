@@ -413,6 +413,12 @@ Don't forget to end the `{/if}` at the bottm of the page, after the form.
 1. Modify the `add_location` form so that it includes the properties left out in this example.
 2. Add an API endpoint `/api/locations/[id]` to get locations by id.
 3. Add a form to add new categories.
+   
+Note: if you see errors about the primary key (id) value already in use, reset the Postgres identidy sequence for the table in SQL Editor:
+
+```sql
+ALTER SEQUENCE location_category_id_seq RESTART WITH 20;
+```
 
 ------
 
