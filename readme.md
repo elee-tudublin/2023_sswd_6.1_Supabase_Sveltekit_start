@@ -197,7 +197,7 @@ To create it, we will use a Sveltkit library called **Superforms** which provide
    });
    ```
 
-5. The next step is to generate the form in the  `load()` function so that it can be displayed. Note too that the `categories` are fetched from the API as they are required for the form.
+5. The next step is to generate the form in the  `load()` function in `add_location/+page.server.js` so that it can be displayed in the page. Note too that the `categories` are fetched from the API as they are required for the form.
 
    ```javascript
    // Page load
@@ -320,7 +320,7 @@ At this point everything required to generate the form has been sent to the page
 
 At this stage the form will display but not submit as it needs an `action handler` - a function which can accept the form data via an `HTTP POST`.
 
-Actions are definded in `+page.server.js` for the route. Add this after the `load()` function defined earlier:
+Actions are definded for the route in `add_location/+page.server.js`. Add this **after the `load()` function** defined earlier:
 
 ```javascript
 // Form actions (e.g. what to do when submit happens)
@@ -348,31 +348,11 @@ At this point it the handler validates the input using the schema rules and then
 
 This step involves calling the API via a `POST` request and passing the new location data in the `request.body` as `JSON`
 
-The `POST` `endpoint` is defined in `/api/locations/+server.js` and does the following:
+The `POST` `endpoint` is **already defined in `/api/locations/+server.js`** and does the following:
 
 * Read data from the request body.
 * Call Supabase.
 * Return the newly created location, including the id (important for later).
-
-```javascript
-// Add a new location
-export async function POST({ request, cookies }) {
-    // Get data from request body
-    let data = await request.json();
-
-    // Insert data
-    const loc = await supabase
-    .from('locations')
-    .insert([data])
-    .select()
-
-    return json({
-        data: loc.data
-    });
-}
-```
-
-
 
 The `endpoint` is accessed via  `fech()` in the form handler using the following code
 
